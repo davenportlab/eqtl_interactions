@@ -31,7 +31,7 @@ All files should be created using the same order of samples
 
 
 
-# Example
+# Linear mixed model example
 
 Using the following objects
 
@@ -52,7 +52,7 @@ Using the following objects
 `subject` subject ID to indicate which samples are from which individuals
 
 
-The `eqtl_lmm.R` script requires 5 arguments: the .rda file to load (containing all the objects), the first and last gene-SNP pair to run in the analysis, the number of gene expression principal components to include and the output file name.
+The `eqtl_lmm.R` script requires 5 arguments: the .rda file to load (containing all the objects), the first and last gene-SNP pair to run in the analysis, the number of gene expression principal components to include and the output file name. The number of genotyping PCs is fixed in the script but this can be modified.
 
 This allows batches of gene-SNP pairs to be run.
 
@@ -60,8 +60,20 @@ For example, to run the first 10 gene-SNP pairs with 25 principal components of 
 
 `Rscript eQTL_lmm.R eqtl_files.rda 1 10 25 results_eqtl.rds`
 
-The `eQTL_interaction_lmm.R` script requires 5 arguments: the .rda file to load (containing all the objects), the first and last gene-SNP pair to run in the analysis, the environmental factor to test for an interaction and the output file name.
-µ
+The `eQTL_interaction_lmm.R` script requires 5 arguments: the .rda file to load (containing all the objects), the first and last gene-SNP pair to run in the analysis, the environmental factor to test for an interaction and the output file name. The number of principal components of gene expression or genotyping are fixed in the script but this can be modified.
+
 For example to run the first 10 gene-SNP pairs to test for an interaction with IFN
 
 `Rscript eQTL_interaction_lmm.R eqtl_files.rda 1 10 IFN results_interaction_IFN.rds`
+
+# Linear model example
+
+The `eQTL_lm.R` and `eQTL_interaction_lmm.R` scripts require the same arguments as the linear mixed model scripts above but information about which samples belong to which individuals is not required.
+
+For example, to run the first 10 gene-SNP pairs with 25 principal components of gene expression
+
+`Rscript eQTL_lm.R eqtl_files.rda 1 10 25 results_eqtl.rds`
+
+For example to run the first 10 gene-SNP pairs to test for an interaction with IFN
+
+`Rscript eQTL_interaction_lm.R eqtl_files.rda 1 10 IFN results_interaction_IFN.rds`

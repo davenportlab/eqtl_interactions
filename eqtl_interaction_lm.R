@@ -1,4 +1,3 @@
-library(lme4)
 args<-commandArgs(TRUE)
 
 load(args[1])
@@ -7,30 +6,16 @@ irange<-args[2]:args[3]
 results<-do.call(rbind, lapply(irange, function(i){
 
 
-    model.null <- lmer(exp[,pairs.int[i,1]] ~
-      geno[,pairs.int[i,2]] +
-      as.factor(int.terms[,args[4]]) +
-      exp.pcs[,1:25] +
-      geno.pcs[,1:6] +
-      (1|subject),
-      REML=FALSE)
-
-
-    model.test <- lmer(exp[,pairs.int[i,1]] ~
+    model <- lm(exp[,pairs.int[i,1]] ~
       geno[,pairs.int[i,2]] +
       as.factor(int.terms[,args[4]]) +
       geno[,pairs.int[i,2]] * as.factor(int.terms[,args[4]]) +
       exp.pcs[,1:25] +
-      geno.pcs[,1:6] +
-      (1|subject),
-      REML=FALSE)
+      geno.pcs[,1:6])
 
-
-      c(summary(model.test)$coefficients[2,],
-        summary(model.test)$coefficients[3,],
-        summary(model.test)$coefficients[dim(summary(model.test)$coefficients)[1],],
-        anova(model.null, model.test)$'Pr(>Chisq)'[2])
-
+    c(summary(model)$coefficients[2,1:3],
+        summary(model)$coefficients[3,1:3],
+        summary(model)$coefficients[dim(summary(model)$coefficients)[1],])
 
 
 }))
